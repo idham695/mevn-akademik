@@ -1,6 +1,5 @@
 import db from "../model/index.js";
 
-const ROLES = db.ROLES;
 const User = db.User;
 
 checkDuplicateUsername = (req, res, next) => {
@@ -17,5 +16,11 @@ checkDuplicateUsername = (req, res, next) => {
         .status(400)
         .send({ message: "Failed! Username is already in use" });
     }
+
+    next();
   });
+};
+
+export default verifySignUp = {
+  checkDuplicateUsername,
 };
