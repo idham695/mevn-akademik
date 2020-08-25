@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import database from "./app/config/db.js";
 import prodiRoutes from "./app/routes/ProdiRoutes";
+import mahasiswaRoutes from "./app/routes/MahasiswaRoutes";
 
 const app = express();
 
@@ -31,6 +32,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/prodi", prodiRoutes);
+app.use("/api/mahasiswa", mahasiswaRoutes);
+
+app.use("/uploads", express.static("uploads"));
 
 // simple route
 app.get("/", (req, res) => {
