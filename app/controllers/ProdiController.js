@@ -60,8 +60,7 @@ exports.delete = async (req, res) => {
     if (!prodi) throw Error("Prodi tidak ada");
 
     const removed = await prodi.remove();
-    if (!removed)
-      throw Error("Something went wrong while trying to delete the prodi");
+    if (!removed) throw Error("Error pada saat menghapus data prodi");
 
     res.status(200).json({ success: true });
   } catch (error) {
