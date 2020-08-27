@@ -7,6 +7,7 @@ import prodiRoutes from "./app/routes/ProdiRoutes";
 import mahasiswaRoutes from "./app/routes/MahasiswaRoutes";
 import semesterRoutes from "./app/routes/SemesterRoutes";
 import tingkatanRoutes from "./app/routes/TingkatanRoutes";
+import dosenRoutes from "./app/routes/DosenRoutes";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/prodi", prodiRoutes);
 app.use("/api/mahasiswa", mahasiswaRoutes);
 app.use("/api/semester", semesterRoutes);
 app.use("/api/tingkatan", tingkatanRoutes);
+app.use("/api/dosen", dosenRoutes);
 
 app.use("/uploads", express.static("uploads"));
 
