@@ -2,10 +2,10 @@ import { Schema, model } from "mongoose";
 
 const MataKuliahSchema = new Schema({
   nama: {
-    type: string,
+    type: String,
   },
   sks: {
-    type: string,
+    type: Number,
   },
   prodi: {
     type: Schema.Types.ObjectId,
@@ -14,6 +14,10 @@ const MataKuliahSchema = new Schema({
   semester: {
     type: Schema.Types.ObjectId,
     ref: "semester",
+  },
+  dosen: {
+    type: Schema.Types.ObjectId,
+    ref: "dosen",
   },
 });
 

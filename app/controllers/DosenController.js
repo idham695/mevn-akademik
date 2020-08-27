@@ -2,7 +2,7 @@ import Dosen from "../model/Dosen.js";
 import Prodi from "../model/Prodi.js";
 
 exports.create = async (req, res) => {
-  const namaProdi = Prodi.findById(req.body.prodiId);
+  const namaProdi = await Prodi.findById(req.body.prodiId);
   if (!namaProdi) throw Error("prodi tidak ada");
   const newDosen = new Dosen({
     nama: req.body.nama,
