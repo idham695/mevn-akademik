@@ -5,6 +5,10 @@ const ProdiSchema = new Schema({
   nama: {
     type: String,
   },
+  tingkatan: {
+    type: Schema.Types.ObjectId,
+    ref: "tingkatan",
+  },
 });
 
 const Prodi = model("prodi", ProdiSchema);
