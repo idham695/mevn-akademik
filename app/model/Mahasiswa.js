@@ -8,6 +8,12 @@ const MahasiswaSchema = new Schema({
   NIM: {
     type: String,
   },
+  password: {
+    type: String,
+  },
+  role: {
+    type: String,
+  },
   prodi: {
     type: Schema.Types.ObjectId,
     ref: "prodi",

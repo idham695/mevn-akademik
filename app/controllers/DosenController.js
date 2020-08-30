@@ -1,5 +1,9 @@
 import Dosen from "../model/Dosen.js";
 import Prodi from "../model/Prodi.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import config from "../config/auth.js";
+import Role from "../middleware/Role";
 
 exports.create = async (req, res) => {
   const namaProdi = await Prodi.findById(req.body.prodiId);
@@ -7,7 +11,9 @@ exports.create = async (req, res) => {
   const newDosen = new Dosen({
     nama: req.body.nama,
     NIDN: req.body.NIDN,
+    password: bcrypt.hashSync(req.body.password, 8),
     prodi: req.body.prodiId,
+    role: Role.Dosen,
     jabatan_fungsional: req.body.jabatan_fungsional,
     tempat_lahir: req.body.tempat_lahir,
     tanggal_lahir: req.body.tanggal_lahir,
@@ -18,9 +24,42 @@ exports.create = async (req, res) => {
   });
 
   try {
+    const searchDosen = await Dosen.findOne({
+      NIDN: req.body.NIDN,
+    });
+    if (searchDosen) throw Error("dosen telah terdaftar");
     const dosen = await newDosen.save();
     if (!dosen) throw Error("gagal insert data dosen");
     res.status(200).json(dosen);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const dosen = await Dosen.findOne({
+      NIDN: req.body.NIDN,
+    });
+    if (!dosen) throw Error("dosen tidak terdaftar");
+    const passwordIsValid = await bcrypt.compareSync(
+      req.body.password,
+      dosen.password
+    );
+    if (!passwordIsValid) throw Error("password salah");
+    var token = await jwt.sign(
+      { id: dosen.id, role: dosen.role },
+      config.secret,
+      {
+        expiresIn: 86400,
+      }
+    );
+    res.status(200).json({
+      id: dosen._id,
+      username: dosen.NIDN,
+      role: dosen.role,
+      accessToken: token,
+    });
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }

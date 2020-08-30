@@ -3,6 +3,7 @@ import dosen from "../controllers/DosenController";
 import { Router } from "express";
 
 import multer from "multer";
+import authJwt from "../middleware/authJwt";
 
 const router = Router();
 
@@ -30,8 +31,9 @@ var upload = multer({
 });
 
 router.post("/", upload.single("photo"), dosen.create);
+router.post("/login", dosen.login);
 router.get("/", dosen.findAll);
-router.get("/:id", dosen.findOne);
+router.get("/:id", authJwt.verifyToken, dosen.findOne);
 router.put("/:id", upload.single("photo"), dosen.update);
 router.delete("/:id", dosen.delete);
 

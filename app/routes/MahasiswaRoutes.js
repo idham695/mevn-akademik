@@ -1,6 +1,8 @@
 import mahasiswa from "../controllers/MahasiswaController";
 import { Router } from "express";
 import multer from "multer";
+import authJwt from "../middleware/authJwt";
+import Role from "../middleware/Role";
 
 const router = Router();
 
@@ -28,9 +30,15 @@ var upload = multer({
 });
 
 router.post("/", upload.single("photo"), mahasiswa.create);
-router.get("/", mahasiswa.findAll);
+router.post("/login", mahasiswa.login);
+router.get(
+  "/",
+  authJwt.verifyToken,
+  authJwt.isDosen(Role.Dosen),
+  mahasiswa.findAll
+);
 router.get("/:id", mahasiswa.findOne);
 router.put("/:id", upload.single("photo"), mahasiswa.update);
 router.delete("/:id", mahasiswa.delete);
-
+router.get("/");
 export default router;
