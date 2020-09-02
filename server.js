@@ -9,6 +9,7 @@ import semesterRoutes from "./app/routes/SemesterRoutes";
 import tingkatanRoutes from "./app/routes/TingkatanRoutes";
 import dosenRoutes from "./app/routes/DosenRoutes";
 import matakuliahRoutes from "./app/routes/MataKuliahRoutes";
+import adminRoutes from "./app/routes/AdminRoutes";
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use("/api/semester", semesterRoutes);
 app.use("/api/tingkatan", tingkatanRoutes);
 app.use("/api/dosen", dosenRoutes);
 app.use("/api/matakuliah", matakuliahRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use("/uploads", express.static("uploads"));
 
