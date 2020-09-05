@@ -24,7 +24,7 @@ export default {
       sideBar: "sideBar",
     }),
     isHome() {
-      return this.$route.path === "/";
+      return this.$route.path === "/home";
     },
   },
 };

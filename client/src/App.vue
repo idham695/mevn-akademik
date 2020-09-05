@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <c-header />
+    <!-- <c-header /> -->
     <c-sidebar />
     <v-main>
       <v-slide-y-transition mode="out-in">
@@ -19,7 +19,7 @@
 </template>
 <script>
 import CAlert from "./components/CAlert";
-import CHeader from "./components/CHeader";
+// import CHeader from "./components/CHeader";
 import CSidebar from "./components/CSidebar";
 import CFooter from "./components/CFooter";
 import { mapActions, mapGetters } from "vuex";
@@ -27,7 +27,7 @@ export default {
   name: "App",
   components: {
     CAlert,
-    CHeader,
+    // CHeader,
     CSidebar,
     CFooter,
   },

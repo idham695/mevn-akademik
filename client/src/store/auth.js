@@ -1,11 +1,11 @@
 export default {
   namespaced: true,
   state: {
-    mahasiswa: [],
+    mahasiswa: {},
   },
   mutations: {
     set: (state, payload) => {
-      state.user = payload;
+      state.mahasiswa = payload;
     },
   },
   actions: {

@@ -34,6 +34,7 @@ export default {
     items: [
       { title: "Home", icon: "dashboard", route: "home" },
       { title: "About", icon: "question_answer", route: "about" },
+      { title: "Logout", icon: "settings_power", route: "login" },
     ],
   }),
   computed: {
