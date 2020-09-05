@@ -40,7 +40,7 @@ exports.login = async (req, res) => {
     const mahasiswa = await Mahasiswa.findOne({
       NIM: req.body.NIM,
     });
-    if (!mahasiswa) throw Error("mahasiswa tidak terdaftar");
+    if (!mahasiswa) throw Error("NIM yang anda masukan salah");
     const passwordIsValid = await bcrypt.compareSync(
       req.body.password,
       mahasiswa.password
@@ -54,13 +54,15 @@ exports.login = async (req, res) => {
       }
     );
     res.status(200).json({
-      id: mahasiswa._id,
-      username: mahasiswa.NIM,
-      role: mahasiswa.role,
-      accessToken: token,
+      status: "success",
+      message: "Login Sukses",
+      data: {
+        mahasiswa,
+        accessToken: token,
+      },
     });
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
