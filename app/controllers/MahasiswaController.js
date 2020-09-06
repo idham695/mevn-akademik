@@ -18,7 +18,8 @@ exports.create = async (req, res) => {
     tempat_lahir: req.body.tempat_lahir,
     tanggal_lahir: req.body.tanggal_lahir,
     alamat: req.body.alamat,
-    photo: req.file.path,
+    photo:
+      "http://localhost:3000/uploads/images/mahasiswa/" + req.file.filename,
     tahun: req.body.tahun,
   });
 
