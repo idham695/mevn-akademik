@@ -65,9 +65,10 @@ export default {
           .post("/api/mahasiswa/login", formData)
           .then((result) => {
             this.$router.push("/home");
-            let user_data = result.data.data.mahasiswa;
+            let user_data = result.data.data;
             this.setAuth(user_data);
-            if (this.mahasiswa._id != null) {
+            console.log(user_data);
+            if (this.mahasiswa.accessToken != null) {
               this.setAlert({
                 status: true,
                 text: "login success",

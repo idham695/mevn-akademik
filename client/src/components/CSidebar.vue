@@ -6,10 +6,8 @@
       </v-btn>
       <v-toolbar-title>Siakad</v-toolbar-title>
     </v-toolbar>
-
     <v-list class="pt-0" dense>
       <v-divider></v-divider>
-
       <v-list-item
         v-for="(item,index) in items"
         :key="index"
@@ -23,6 +21,20 @@
           <v-list-item-title>{{item.title}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item>
+        <v-btn
+          block
+          small
+          rounded
+          depressed
+          color="error lighten-1"
+          class="white--text"
+          @click.stop="logout();"
+        >
+          Logout
+          <v-icon small right dark>settings_power</v-icon>
+        </v-btn>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -30,16 +42,18 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "c-sidebar",
+  props: ["nextUrl"],
   data: () => ({
     items: [
       { title: "Home", icon: "dashboard", route: "home" },
       { title: "About", icon: "question_answer", route: "about" },
-      { title: "Logout", icon: "settings_power", route: "login" },
+      { title: "Profile", icon: "person", route: "profile" },
     ],
   }),
   computed: {
     ...mapGetters({
       sideBar: "sideBar",
+      mahasiswa: "auth/mahasiswa",
     }),
     drawer: {
       get() {
@@ -53,7 +67,19 @@ export default {
   methods: {
     ...mapActions({
       setSideBar: "setSideBar",
+      setAuth: "auth/set",
+      setAlert: "alert/set",
     }),
+    logout() {
+      this.setAuth({});
+      this.setAlert({
+        status: true,
+        text: "Logout Berhasil",
+        type: "success",
+      });
+      this.setSideBar(false);
+      this.$router.push("/");
+    },
   },
 };
 </script>
