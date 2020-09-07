@@ -42,12 +42,11 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "c-sidebar",
-  props: ["nextUrl"],
   data: () => ({
     items: [
-      { title: "Home", icon: "dashboard", route: "home" },
-      { title: "About", icon: "question_answer", route: "about" },
-      { title: "Profile", icon: "person", route: "profile" },
+      { title: "Home", icon: "dashboard", route: "home", auth: true },
+      { title: "About", icon: "question_answer", route: "about", auth: true },
+      { title: "Profile", icon: "person", route: "profile", auth: true },
     ],
   }),
   computed: {
@@ -71,14 +70,23 @@ export default {
       setAlert: "alert/set",
     }),
     logout() {
-      this.setAuth({});
-      this.setAlert({
-        status: true,
-        text: "Logout Berhasil",
-        type: "success",
-      });
+      if (localStorage.getItem("token") != null) {
+        localStorage.removeItem("token");
+        this.setAuth({});
+        this.setAlert({
+          status: true,
+          text: "Logout Berhasil",
+          type: "success",
+        });
+        this.$router.push("/login");
+      } else {
+        this.setAlert({
+          status: true,
+          text: "Logout Gagal",
+          type: "error",
+        });
+      }
       this.setSideBar(false);
-      this.$router.push("/");
     },
   },
 };

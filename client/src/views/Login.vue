@@ -64,17 +64,22 @@ export default {
         this.axios
           .post("/api/mahasiswa/login", formData)
           .then((result) => {
-            this.$router.push("/home");
             let user_data = result.data.data;
             this.setAuth(user_data);
             console.log(user_data);
             if (this.mahasiswa.accessToken != null) {
+              localStorage.setItem(
+                "token",
+                JSON.stringify(this.mahasiswa.accessToken)
+              );
+              console.log(localStorage);
               this.setAlert({
                 status: true,
                 text: "login success",
                 type: "success",
               });
               this.setStatusDialog(false);
+              this.$router.push("/home");
             } else {
               this.setAlert({
                 status: false,
