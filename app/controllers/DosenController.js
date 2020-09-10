@@ -55,13 +55,15 @@ exports.login = async (req, res) => {
       }
     );
     res.status(200).json({
-      id: dosen._id,
-      username: dosen.NIDN,
-      role: dosen.role,
-      accessToken: token,
+      status: "success",
+      message: "Login Sukses",
+      data: {
+        dosen,
+        accessToken: token,
+      },
     });
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 

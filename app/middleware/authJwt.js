@@ -38,7 +38,7 @@ const isDosen = (role) => (req, res, next) => {
 };
 
 const isAdmin = (role) => (req, res, next) => {
-  if (req.rol !== role) {
+  if (req.role !== role) {
     return res.status(403).send({
       message: "tidak diizinkan login menggunakan akun lain selain akun admin",
     });

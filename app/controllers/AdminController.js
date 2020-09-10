@@ -34,12 +34,14 @@ exports.login = async (req, res) => {
       expiresIn: 86400,
     });
     res.status(201).json({
-      id: admin._id,
-      username: admin.username,
-      role: admin.role,
-      accessToken: token,
+      status: "success",
+      message: "Login Sukses",
+      data: {
+        admin,
+        accessToken: token,
+      },
     });
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    res.status(400).json({ message: error.message });
   }
 };

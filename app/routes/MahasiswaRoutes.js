@@ -34,7 +34,7 @@ router.post("/login", mahasiswa.login);
 router.get(
   "/",
   authJwt.verifyToken,
-  authJwt.isAdmin(Role.Admin),
+  authJwt.isMahasiswa(Role.Mahasiswa),
   mahasiswa.findAll
 );
 router.get("/:id", mahasiswa.findOne);
