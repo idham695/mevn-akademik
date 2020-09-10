@@ -1,19 +1,35 @@
 export default {
   namespaced: true,
   state: {
-    mahasiswa: {},
+    mahasiswa: [],
+    admin: {},
+    dosen: {},
   },
   mutations: {
-    set: (state, payload) => {
+    setMahasiswa: (state, payload) => {
       state.mahasiswa = payload;
+    },
+    setAdmin: (state, payload) => {
+      state.admin = payload;
+    },
+    setDosen: (state, payload) => {
+      state.dosen = payload;
     },
   },
   actions: {
-    set: ({ commit }, payload) => {
-      commit("set", payload);
+    setMahasiswa: ({ commit }, payload) => {
+      commit("setMahasiswa", payload);
+    },
+    setAdmin: ({ commit }, payload) => {
+      commit("setAdmin", payload);
+    },
+    setDosen: ({ commit }, payload) => {
+      commit("setDosen", payload);
     },
   },
   getters: {
     mahasiswa: (state) => state.mahasiswa,
+    admin: (state) => state.admin,
+    dosen: (state) => state.dosen,
   },
 };

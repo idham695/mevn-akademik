@@ -1,9 +1,12 @@
 <template>
   <v-app-bar dark color="primary">
-    <v-app-bar-nav-icon v-if="isHome" @click="setSideBar(!sideBar)"></v-app-bar-nav-icon>
-    <v-btn v-if="!isHome" icon @click="$router.go(-1)">
+    <v-app-bar-nav-icon v-if="isHome || isAdminHome || isDosenHome" @click="setSideBar(!sideBar)"></v-app-bar-nav-icon>
+    <v-btn v-else-if="!isHome" icon @click="$router.go(-1)">
       <v-icon>arrow_back</v-icon>
     </v-btn>
+    <!-- <v-btn v-else-if="!isAdminHome" icon @click="$router.go(-1)">
+      <v-icon>arrow_back</v-icon>
+    </v-btn>-->
 
     <v-toolbar-title class="white--text">Siakad</v-toolbar-title>
 
@@ -25,6 +28,12 @@ export default {
     }),
     isHome() {
       return this.$route.path === "/home";
+    },
+    isAdminHome() {
+      return this.$route.path === "/admin/home";
+    },
+    isDosenHome() {
+      return this.$route.path === "/dosen/home";
     },
   },
 };

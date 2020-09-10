@@ -1,9 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Login from "../views/Login.vue";
-import About from "../views/About.vue";
-import Home from "../views/Home.vue";
+import Login from "../views/mahasiswa/Login.vue";
+import MataKuliah from "../views/mahasiswa/MataKuliah.vue";
+import Home from "../views/mahasiswa/Home.vue";
 import store from "../store/index";
+import AdminHome from "../views/admin/Home.vue";
+import AdminLogin from "../views/admin/Login.vue";
+import DosenLogin from "../views/dosen/Login.vue";
+import DosenHome from "../views/dosen/Home.vue";
 
 Vue.use(Router);
 
@@ -13,7 +17,7 @@ const router = new Router({
     {
       path: "/profile",
       name: "profile",
-      component: () => import("../views/Profile.vue"),
+      component: () => import("../views/mahasiswa/Profile.vue"),
       meta: { auth: true },
     },
     {
@@ -22,9 +26,31 @@ const router = new Router({
       component: Login,
     },
     {
-      path: "/about",
-      name: "about",
-      component: About,
+      path: "/admin/login",
+      name: "adminLogin",
+      component: AdminLogin,
+    },
+    {
+      path: "/admin/home",
+      name: "adminHome",
+      component: AdminHome,
+      meta: { auth: true },
+    },
+    {
+      path: "/dosen/login",
+      name: "dosenLogin",
+      component: DosenLogin,
+    },
+    {
+      path: "/dosen/home",
+      name: "dosenHome",
+      component: DosenHome,
+      meta: { auth: true },
+    },
+    {
+      path: "/mataKuliah",
+      name: "mataKuliah",
+      component: MataKuliah,
       meta: { auth: true },
     },
     {

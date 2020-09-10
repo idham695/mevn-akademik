@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import CHeader from "../components/CHeader";
+import CHeader from "../../components/CHeader";
 import { mapGetters } from "vuex";
 export default {
   components: {

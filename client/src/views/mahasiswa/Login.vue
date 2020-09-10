@@ -50,7 +50,7 @@ export default {
     ...mapActions({
       setAlert: "alert/set",
       setStatusDialog: "dialog/setStatus",
-      setAuth: "auth/set",
+      setAuth: "auth/setMahasiswa",
     }),
     close() {
       this.setStatusDialog(false);
@@ -68,10 +68,7 @@ export default {
             this.setAuth(user_data);
             console.log(user_data);
             if (this.mahasiswa.accessToken != null) {
-              localStorage.setItem(
-                "token",
-                JSON.stringify(this.mahasiswa.accessToken)
-              );
+              localStorage.setItem("token", this.mahasiswa.accessToken);
               console.log(localStorage);
               this.setAlert({
                 status: true,
