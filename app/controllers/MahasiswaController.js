@@ -40,7 +40,7 @@ exports.login = async (req, res) => {
   try {
     const mahasiswa = await Mahasiswa.findOne({
       NIM: req.body.NIM,
-    });
+    }).populate("prodi");
     if (!mahasiswa) throw Error("NIM yang anda masukan salah");
     const passwordIsValid = await bcrypt.compareSync(
       req.body.password,
