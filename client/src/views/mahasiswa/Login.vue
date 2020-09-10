@@ -69,7 +69,6 @@ export default {
             console.log(user_data);
             if (this.mahasiswa.accessToken != null) {
               localStorage.setItem("token", this.mahasiswa.accessToken);
-              console.log(localStorage);
               this.setAlert({
                 status: true,
                 text: "login success",

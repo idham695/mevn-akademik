@@ -20,18 +20,20 @@
         <v-list-item-content>
           <v-list-item-title>{{item.title}}</v-list-item-title>
         </v-list-item-content>
-        <!-- <v-btn
+      </v-list-item>
+      <v-list-item v-for="(data, value) in buttonLogout" :key="'a'+ value">
+        <v-btn
           block
           small
           rounded
           depressed
           color="error lighten-1"
           class="white--text"
-          @click.stop="item.click()"
+          @click.stop="data.click()"
         >
           Logout
           <v-icon small right dark>settings_power</v-icon>
-        </v-btn>-->
+        </v-btn>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -53,20 +55,24 @@ export default {
             auth: true,
           },
           { title: "Profile", icon: "person", route: "profile", auth: true },
-          { click: this.logout },
         ];
       } else if (this.dosen.dosen) {
         return [
           { title: "Home", icon: "dashboard", route: "dosenHome", auth: true },
-          { click: this.dosenLogout },
-        ];
-      } else if (this.admin.admin) {
-        return [
-          { title: "Home", icon: "dashboard", route: "adminHome", auth: true },
-          { click: this.adminLogout },
         ];
       } else {
-        return true;
+        return [
+          { title: "Home", icon: "dashboard", route: "adminHome", auth: true },
+        ];
+      }
+    },
+    buttonLogout() {
+      if (this.mahasiswa.mahasiswa) {
+        return [{ click: this.logout }];
+      } else if (this.dosen.dosen) {
+        return [{ click: this.dosenLogout }];
+      } else {
+        return [{ click: this.adminLogout }];
       }
     },
     ...mapGetters({
