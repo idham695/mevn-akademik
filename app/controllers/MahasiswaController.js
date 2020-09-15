@@ -115,6 +115,28 @@ exports.update = async (req, res) => {
   }
 };
 
+exports.editPassword = async (req, res) => {
+  const id = req.params.id;
+  const mahasiswa = await Mahasiswa.findById(id);
+  if (!mahasiswa) throw Error("nama mahasiswa tidak ada");
+
+  const updatePassword = {
+    password: bcrypt.hashSync(req.body.password, 8),
+  };
+  try {
+    const update = await Mahasiswa.findByIdAndUpdate(id, updatePassword, {
+      useFindAndModify: false,
+    });
+    if (!update) throw Error("gagal update password mahasiswa");
+    res.status(200).json({
+      status: "success",
+      message: "Edit password berhasil",
+    });
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+};
+
 exports.delete = async (req, res) => {
   try {
     const mahasiswa = await Mahasiswa.findById(req.params.id);

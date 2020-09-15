@@ -37,6 +37,12 @@ router.get(
   authJwt.isMahasiswa(Role.Mahasiswa),
   mahasiswa.findAll
 );
+router.put(
+  "/editPassword/:id",
+  authJwt.verifyToken,
+  authJwt.isMahasiswa(Role.Mahasiswa),
+  mahasiswa.editPassword
+);
 router.get("/:id", mahasiswa.findOne);
 router.put("/:id", upload.single("photo"), mahasiswa.update);
 router.delete("/:id", mahasiswa.delete);
