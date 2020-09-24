@@ -14,7 +14,7 @@ import adminRoutes from "./app/routes/AdminRoutes";
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "http://localhost:3200",
 };
 
 const db = database.url;
@@ -52,7 +52,7 @@ app.get("/", (req, res) => {
 });
 
 // set port, listen for requests
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3200;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
