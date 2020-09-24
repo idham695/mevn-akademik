@@ -45,7 +45,7 @@ export default {
 
   computed: {
     items() {
-      if (this.mahasiswa.mahasiswa) {
+      if (this.mahasiswa) {
         return [
           { title: "Home", icon: "dashboard", route: "home", auth: true },
           {
@@ -67,7 +67,7 @@ export default {
       }
     },
     buttonLogout() {
-      if (this.mahasiswa.mahasiswa) {
+      if (this.mahasiswa) {
         return [{ click: this.logout }];
       } else if (this.dosen.dosen) {
         return [{ click: this.dosenLogout }];

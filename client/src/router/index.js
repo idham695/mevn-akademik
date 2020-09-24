@@ -8,6 +8,7 @@ import AdminHome from "../views/admin/Home.vue";
 import AdminLogin from "../views/admin/Login.vue";
 import DosenLogin from "../views/dosen/Login.vue";
 import DosenHome from "../views/dosen/Home.vue";
+import EditPasswordMahasiwa from "../views/mahasiswa/EditPassword.vue";
 
 Vue.use(Router);
 
@@ -18,6 +19,12 @@ const router = new Router({
       path: "/profile",
       name: "profile",
       component: () => import("../views/mahasiswa/Profile.vue"),
+      meta: { auth: true },
+    },
+    {
+      path: "/edit-password/:id",
+      name: "EditPassword",
+      component: EditPasswordMahasiwa,
       meta: { auth: true },
     },
     {

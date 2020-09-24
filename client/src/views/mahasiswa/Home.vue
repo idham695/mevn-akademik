@@ -48,19 +48,19 @@ export default {
       return [
         {
           title: "Nama",
-          value: this.mahasiswa.mahasiswa.nama,
+          value: this.mahasiswa.nama,
         },
         {
           title: "Prodi",
-          value: this.mahasiswa.mahasiswa.prodi.nama,
+          value: this.mahasiswa.prodi.nama,
         },
         {
           title: "Konsentrasi",
-          value: this.mahasiswa.mahasiswa.prodi.nama,
+          value: this.mahasiswa.prodi.nama,
         },
         {
           title: "Angkatan",
-          value: this.mahasiswa.mahasiswa.tahun,
+          value: this.mahasiswa.tahun,
         },
       ];
     },

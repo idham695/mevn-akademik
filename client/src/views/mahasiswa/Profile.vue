@@ -11,6 +11,7 @@
       </tbody>
     </v-simple-table>
     <v-spacer></v-spacer>
+    <v-btn :to="'/edit-password/' + this.mahasiswa._id">Edit Password</v-btn>
   </div>
 </template>
 <script>
@@ -28,30 +29,28 @@ export default {
       return [
         {
           title: "nama",
-          value: this.mahasiswa.mahasiswa.nama,
+          value: this.mahasiswa.nama,
         },
         {
           title: "NIM",
-          value: this.mahasiswa.mahasiswa.NIM,
+          value: this.mahasiswa.NIM,
         },
         {
           title: "prodi",
-          value: this.mahasiswa.mahasiswa.prodi.nama,
+          value: this.mahasiswa.prodi.nama,
         },
         {
           title: "Tempat/Tanggal lahir",
           value:
-            this.mahasiswa.mahasiswa.tempat_lahir +
-            " " +
-            this.mahasiswa.mahasiswa.tanggal_lahir,
+            this.mahasiswa.tempat_lahir + " " + this.mahasiswa.tanggal_lahir,
         },
         {
           title: "Alamat",
-          value: this.mahasiswa.mahasiswa.alamat,
+          value: this.mahasiswa.alamat,
         },
         {
           title: "Tahun",
-          value: this.mahasiswa.mahasiswa.tahun,
+          value: this.mahasiswa.tahun,
         },
       ];
     },

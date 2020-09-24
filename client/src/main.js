@@ -1,12 +1,13 @@
 import Vue from "vue";
-import "./plugins/axios";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import "material-design-icons-iconfont";
+import VeeValidate from "vee-validate";
 
+Vue.use(VeeValidate);
 Vue.config.productionTip = false;
 
 new Vue({

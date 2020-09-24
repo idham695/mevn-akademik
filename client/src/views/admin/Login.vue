@@ -33,6 +33,7 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 export default {
   name: "login",
   data() {
@@ -65,8 +66,8 @@ export default {
           username: this.username,
           password: this.password,
         };
-        this.axios
-          .post("/api/admin/login", formData)
+        axios
+          .post("http://localhost:3200/api/admin/login", formData)
           .then((result) => {
             let user_data = result.data.data;
             this.setAuth(user_data);

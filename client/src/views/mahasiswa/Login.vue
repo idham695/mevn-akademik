@@ -29,6 +29,8 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
+// import VueJwtDecode from "vue-jwt-decode";
 export default {
   name: "login",
   data() {
@@ -61,28 +63,22 @@ export default {
           NIM: this.NIM,
           password: this.password,
         };
-        this.axios
-          .post("/api/mahasiswa/login", formData)
+        axios
+          .post("http://localhost:3200/api/mahasiswa/login", formData)
           .then((result) => {
-            let user_data = result.data.data;
-            this.setAuth(user_data);
-            console.log(user_data);
-            if (this.mahasiswa.accessToken != null) {
-              localStorage.setItem("token", this.mahasiswa.accessToken);
-              this.setAlert({
-                status: true,
-                text: "login success",
-                type: "success",
-              });
-              this.setStatusDialog(false);
-              this.$router.push("/home");
-            } else {
-              this.setAlert({
-                status: false,
-                text: "login error",
-                type: "error",
-              });
-            }
+            console.log(result);
+            localStorage.setItem("token", result.data.token);
+            // const mahasiswa = JSON.parse(atob(user_data.split(".")[1]));
+            this.setAuth(result.data.mahasiswa);
+            // console.log(user_data);
+            // console.log(localStorage.getItem("token"));
+            this.setAlert({
+              status: true,
+              text: "login success",
+              type: "success",
+            });
+            this.setStatusDialog(false);
+            this.$router.push("/home");
           })
           .catch((err) => {
             let responses = err.response;
