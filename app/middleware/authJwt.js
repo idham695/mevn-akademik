@@ -1,56 +1,37 @@
 import jwt from "jsonwebtoken";
 import config from "../config/auth.js";
 
-const verifyToken = (req, res, next) => {
-  let token = req.headers["x-auth-token"];
+function verifyToken(req, res, next) {
+  let Header = req.headers["authorization"];
 
-  if (!token) {
-    return res.status(403).send({ message: "No token, authorized denied" });
-  }
-
-  jwt.verify(token, config.secret, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({ message: "Unauthorized" });
-    }
-    req.userId = decoded.id;
-    req.role = decoded.role;
+  if (typeof Header !== "undefined") {
+    const bearer = Header.split(" ");
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
     next();
+  } else {
+    return res.status(403).send({ message: "Unauthorized" });
+  }
+}
+
+function isMahasiswa(req, res, next) {
+  jwt.verify(req.token, config.secret, (err, authData) => {
+    if (err) return res.status(401).send({ message: "Unauthorized" });
+    else {
+      if (authData.role !== "Mahasiswa") {
+        return res
+          .status(403)
+          .send({ message: "Tidak di ijinkan selain aku mahasiswa" });
+      } else {
+        next();
+      }
+    }
   });
-};
-
-const isMahasiswa = (role) => (req, res, next) => {
-  if (req.role !== role) {
-    return res.status(403).send({
-      message:
-        "tidak diizinkan login menggunakan akun lain selain akun mahasiswa",
-    });
-  }
-  next();
-};
-
-const isDosen = (role) => (req, res, next) => {
-  if (req.role !== role) {
-    return res.status(403).send({
-      message: "tidak diizinkan login menggunakan akun lain selain akun dosen",
-    });
-  }
-  next();
-};
-
-const isAdmin = (role) => (req, res, next) => {
-  if (req.role !== role) {
-    return res.status(403).send({
-      message: "tidak diizinkan login menggunakan akun lain selain akun admin",
-    });
-  }
-  next();
-};
+}
 
 const authJwt = {
   verifyToken,
   isMahasiswa,
-  isAdmin,
-  isDosen,
 };
 
 export default authJwt;

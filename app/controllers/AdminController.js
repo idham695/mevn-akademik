@@ -30,16 +30,13 @@ exports.login = async (req, res) => {
       admin.password
     );
     if (!passwordIsValid) throw Error("password salah");
-    var token = jwt.sign({ id: admin.id, role: admin.role }, config.secret, {
+    var token = jwt.sign({ admin, role: admin.role }, config.secret, {
       expiresIn: 86400,
     });
     res.status(201).json({
       status: "success",
       message: "Login Sukses",
-      data: {
-        admin,
-        accessToken: token,
-      },
+      token,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });

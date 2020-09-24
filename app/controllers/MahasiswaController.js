@@ -13,7 +13,7 @@ exports.create = async (req, res) => {
     NIM: req.body.NIM,
     password: bcrypt.hashSync(req.body.password, 8),
     nama: req.body.nama,
-    role: Role.Mahasiswa,
+    role: "Mahasiswa",
     prodi: req.body.prodiId,
     tempat_lahir: req.body.tempat_lahir,
     tanggal_lahir: req.body.tanggal_lahir,
@@ -47,21 +47,21 @@ exports.login = async (req, res) => {
       mahasiswa.password
     );
     if (!passwordIsValid) throw Error("password salah");
-    var token = await jwt.sign(
-      { id: mahasiswa.id, role: mahasiswa.role },
+    await jwt.sign(
+      { mahasiswa, role: mahasiswa.role },
       config.secret,
       {
         expiresIn: 86400,
+      },
+      (error, token) => {
+        res.status(200).json({
+          status: "success",
+          message: "Login Sukses",
+          mahasiswa,
+          token,
+        });
       }
     );
-    res.status(200).json({
-      status: "success",
-      message: "Login Sukses",
-      data: {
-        mahasiswa,
-        accessToken: token,
-      },
-    });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -117,16 +117,19 @@ exports.update = async (req, res) => {
 
 exports.editPassword = async (req, res) => {
   const id = req.params.id;
+
   const mahasiswa = await Mahasiswa.findById(id);
   if (!mahasiswa) throw Error("nama mahasiswa tidak ada");
-
-  const updatePassword = {
-    password: bcrypt.hashSync(req.body.password, 8),
-  };
+  const password = bcrypt.hashSync(req.body.password, 8);
   try {
-    const update = await Mahasiswa.findByIdAndUpdate(id, updatePassword, {
-      useFindAndModify: false,
-    });
+    const update = await Mahasiswa.findOneAndUpdate(
+      id,
+      { $set: { password } },
+      {
+        useFindAndModify: false,
+      }
+    );
+    console.log(update);
     if (!update) throw Error("gagal update password mahasiswa");
     res.status(200).json({
       status: "success",
