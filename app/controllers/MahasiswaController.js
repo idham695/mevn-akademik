@@ -3,7 +3,36 @@ import config from "../config/auth.js";
 import Prodi from "../model/Prodi.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import Role from "../middleware/Role";
+import KRS from "../model/KRS";
+import MataKuliah from "../model/MataKuliah";
+
+exports.getKRS = async (req, res) => {
+  try {
+    const krs = await KRS.find()
+      .populate("mahasiswa")
+      .populate("semester")
+      .populate("matakuliah");
+    if (!krs) throw Error("data krs tidak ada");
+    res.status(200).json(krs);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+};
+
+exports.insertKRS = async (req, res) => {
+  try {
+    const matakuliah = await MataKuliah.find();
+    if (!matakuliah) throw Error("mata kuliah tidak terdaftar");
+    const insertMataKuliah = new KRS({
+      matakuliah: req.body.matakuliah,
+    });
+    const krs = insertMataKuliah.save();
+    if (!krs) throw Error("gagal input mata kuliah");
+    res.status(200).json(krs);
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
+  }
+};
 
 exports.create = async (req, res) => {
   const namaProdi = await Prodi.findById(req.body.prodiId);

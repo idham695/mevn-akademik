@@ -29,9 +29,25 @@ function isMahasiswa(req, res, next) {
   });
 }
 
+function isAdmin(req, res, next) {
+  jwt.verify(req.token, config.secret, (err, authData) => {
+    if (err) return res.status(401).send({ message: "Unauthorized" });
+    else {
+      if (authData.role !== "Admin") {
+        return res
+          .status(403)
+          .send({ message: "Tidak di ijinkan selain aku mahasiswa" });
+      } else {
+        next();
+      }
+    }
+  });
+}
+
 const authJwt = {
   verifyToken,
   isMahasiswa,
+  isAdmin,
 };
 
 export default authJwt;
