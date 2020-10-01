@@ -4,6 +4,7 @@ import Prodi from "../model/Prodi.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import KRS from "../model/KRS";
+import Dosen from "../model/Dosen";
 import MataKuliah from "../model/MataKuliah";
 
 exports.getKRS = async (req, res) => {
@@ -11,7 +12,8 @@ exports.getKRS = async (req, res) => {
     const krs = await KRS.find()
       .populate("mahasiswa")
       .populate("semester")
-      .populate("matakuliah");
+      .populate("matakuliah")
+      .populate("dosen");
     if (!krs) throw Error("data krs tidak ada");
     res.status(200).json(krs);
   } catch (error) {
@@ -23,8 +25,11 @@ exports.insertKRS = async (req, res) => {
   try {
     const matakuliah = await MataKuliah.find();
     if (!matakuliah) throw Error("mata kuliah tidak terdaftar");
+    const dosen = await Dosen.find();
+    if (!dosen) throw Error("dosen tidak terdaftar");
     const insertMataKuliah = new KRS({
       matakuliah: req.body.matakuliah,
+      dosen: req.body.dosen,
     });
     const krs = insertMataKuliah.save();
     if (!krs) throw Error("gagal input mata kuliah");

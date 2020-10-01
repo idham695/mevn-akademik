@@ -15,10 +15,6 @@ const MataKuliahSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "semester",
   },
-  dosen: {
-    type: Schema.Types.ObjectId,
-    ref: "dosen",
-  },
 });
 
 const MataKuliah = model("matakuliah", MataKuliahSchema);

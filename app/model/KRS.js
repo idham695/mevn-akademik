@@ -13,6 +13,10 @@ const KrsSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "matakuliah",
   },
+  dosen: {
+    type: Schema.Types.ObjectId,
+    ref: "dosen",
+  },
 });
 
 const KRS = model("KRS", KrsSchema);

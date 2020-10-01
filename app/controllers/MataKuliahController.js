@@ -2,14 +2,10 @@ import MataKuliah from "../model/MataKuliah";
 
 import Semester from "../model/Semester";
 import Prodi from "../model/Prodi";
-import Dosen from "../model/Dosen";
 
 exports.create = async (req, res) => {
   const namaProdi = await Prodi.findById(req.body.prodiId);
   if (!namaProdi) throw Error("prodi tidak ada");
-
-  const namaDosen = await Dosen.findById(req.body.dosenId);
-  if (!namaDosen) throw Error("dosen tidak ada");
 
   const namaSemester = await Semester.findById(req.body.semesterId);
   if (!namaSemester) throw Error("semester tidak ada");
@@ -19,7 +15,6 @@ exports.create = async (req, res) => {
     sks: req.body.sks,
     semester: req.body.semesterId,
     prodi: req.body.prodiId,
-    dosen: req.body.dosenId,
   });
 
   try {
@@ -35,8 +30,7 @@ exports.findAll = async (req, res) => {
   try {
     const mataKuliah = await MataKuliah.find()
       .populate("semester", "semester")
-      .populate("prodi", "nama")
-      .populate("dosen", "nama");
+      .populate("prodi", "nama");
 
     if (!mataKuliah) throw Error("data mata kuliah tidak ada");
     res.status(200).json(mataKuliah);
@@ -49,7 +43,6 @@ exports.findOne = async (req, res) => {
   const id = req.params.id;
   try {
     const mataKuliah = await MataKuliah.findById(id)
-      .populate("dosen")
       .populate("semester")
       .populate("prodi");
 
@@ -65,9 +58,6 @@ exports.update = async (req, res) => {
   const namaProdi = await Prodi.findById(req.body.prodiId);
   if (!namaProdi) throw Error("prodi tidak ada");
 
-  const namaDosen = await Dosen.findById(req.body.dosenId);
-  if (!namaDosen) throw Error("dosen tidak ada");
-
   const namaSemester = await Semester.findById(req.body.semesterId);
   if (!namaSemester) throw Error("semester tidak ada");
 
@@ -76,7 +66,6 @@ exports.update = async (req, res) => {
     sks: req.body.sks,
     semester: req.body.semesterId,
     prodi: req.body.prodiId,
-    dosen: req.body.dosenId,
   };
 
   const id = req.params.id;
